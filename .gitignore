@@ -6,3 +6,4 @@ state/
 config/
 __pycache__/
 *.pyc
+.tracker_shares

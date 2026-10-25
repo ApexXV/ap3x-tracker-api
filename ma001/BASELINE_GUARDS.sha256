@@ -1,0 +1,3 @@
+29f4b36a7eaf92e53375c4604389cf1046d462d7be4f1c804198eee2c0409cf1  tests/fixtures/tracker_api.baseline.py
+52b1771b497cf0fa8a5ca1f12079076d9459c10b2c68b71bb588c92524fd440d  tests/fixtures/local-ops-canary.ah001.js
+603cfd9527c9192d098fd8971dbe4df0524f35442f2f79b0cdacef0d7a89bf1f  tests/fixtures/local-ops-canary.ah001.html

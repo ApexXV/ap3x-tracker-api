@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Local Operations · Atlas Grid</title>
+    <link rel="stylesheet" href="/local-ops-canary-vendor/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="/local-ops-canary.css?v=loc003" />
+    <link rel="stylesheet" href="/local-ops-airspace.css?v=as001" />
+    <link rel="stylesheet" href="/shared/wall-night-mode.css?v=nm002">
+</head>
+  <body data-state="loading">
+    <div class="ops-shell">
+      <header class="command-header">
+        <div class="brand-lockup">
+          <strong>LOCAL OPERATIONS</strong>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span>ATLAS GRID · ARCTIC</span>
+        </div>
+
+        <div class="command-state" aria-label="Current operating posture">
+          <span class="read-only-badge"><i aria-hidden="true">◇</i> DISPLAY READ-ONLY</span>
+          <span class="state-divider" aria-hidden="true"></span>
+          <span id="overall-posture" class="posture posture-good"><i aria-hidden="true"></i> INITIALIZING</span>
+        </div>
+      </header>
+
+      <section class="weather-strip panel" aria-label="Local weather summary">
+        <div class="weather-live">
+          <span id="weather-state">WEATHER LINK</span>
+          <span class="weather-glyph" aria-hidden="true">☁</span>
+          <strong id="weather-temp">—°F</strong>
+        </div>
+        <div class="weather-metric"><span>FEELS</span><strong id="weather-feels">—°</strong></div>
+        <div class="weather-metric"><span>WIND</span><strong id="weather-wind">—</strong></div>
+        <div class="weather-metric"><span>GUST</span><strong id="weather-gust">—</strong></div>
+        <div class="weather-metric"><span>RAIN</span><strong id="weather-rain">—%</strong></div>
+        <div class="weather-metric weather-alerts"><span>ALERTS</span><strong id="weather-alerts">—</strong></div>
+      </section>
+
+      <main class="operations-grid">
+        <section class="map-panel panel" aria-label="Home-area operations map">
+          <div id="ops-map" role="img" aria-label="Home-area map with radar and incident overlays"></div>
+          <div class="map-tone" aria-hidden="true"></div>
+          <div class="map-crosshair" aria-hidden="true"><i></i></div>
+
+          <div class="map-heading">
+            <strong>LOCAL MAP · HOME AREA CENTERED</strong>
+            <span id="map-updated">WAITING FOR LOCAL CONTRACT</span>
+          </div>
+
+          <div class="map-source-stack" aria-label="Map source health">
+            <span id="source-basemap" class="source-chip source-pending">BASEMAP · WAIT</span>
+            <span id="source-radar" class="source-chip source-pending">RADAR · WAIT</span>
+            <span id="source-roads" class="source-chip source-pending">ROADS · WAIT</span>
+            <span id="source-alerts" class="source-chip source-pending">WARNINGS · WAIT</span>
+          </div>
+
+          <div class="map-legend" aria-label="Incident legend">
+            <span><i class="legend-line closure"></i> CLOSURE</span>
+            <span><i class="legend-dot road"></i> ROAD</span>
+            <span><i class="legend-dot outage"></i> POWER</span>
+            <span><i class="legend-area warning"></i> WARNING</span>
+          </div>
+
+          <div id="map-fallback" class="map-fallback" hidden>
+            <strong>MAP LAYERS DEGRADED</strong>
+            <span>Local incident rail remains available.</span>
+          </div>
+        </section>
+
+        <aside class="operations-rail" aria-label="Local operations detail">
+          <article id="priority-card" class="priority-card panel" hidden>
+            <div class="priority-kicker">
+              <span class="priority-icon" aria-hidden="true">!</span>
+              <div>
+                <strong id="priority-label">OPS PRIORITY</strong>
+                <span id="priority-kind">LOCAL IMPACT</span>
+              </div>
+            </div>
+            <h1 id="priority-title">NO ACTIVE INCIDENT</h1>
+            <h2 id="priority-impact">OBSERVING LOCAL SOURCES</h2>
+            <p id="priority-location">HOME AREA</p>
+            <div class="priority-detail"><span id="priority-timing">NO OPERATOR ACTION</span></div>
+            <div class="priority-source"><span id="priority-source">SOURCE · LOCAL OPS</span></div>
+          </article>
+
+          <div id="calm-stack" class="calm-stack">
+            <article class="camera-panel panel">
+              <div class="panel-title">
+                <strong>CAMERA ALPHA</strong>
+                <span id="camera-state" class="inline-state state-pending">CONNECTING</span>
+              </div>
+              <div class="camera-frame">
+                <img id="camera-image" alt="Camera Alpha snapshot" />
+                <div id="camera-placeholder" class="camera-placeholder" aria-hidden="true">
+                  <span>◉</span>
+                  <small>PRIVACY-SAFE PREVIEW</small>
+                </div>
+              </div>
+              <div class="camera-footer">SNAPSHOT WALL</div>
+            </article>
+
+            <article class="fabric-panel panel">
+              <div class="panel-title">
+                <strong>SYSTEM FABRIC</strong>
+                <span class="fabric-header-summary">
+                  OBS <b id="fabric-services">— / —</b>
+                  <i aria-hidden="true">·</i>
+                  EXT <b id="fabric-external">— / —</b>
+                </span>
+                <span id="fabric-state" class="inline-state state-pending">WAIT</span>
+              </div>
+              <div class="fabric-grid">
+                <div><i></i><span>CPU</span><strong id="fabric-cpu">—%</strong></div>
+                <div><i></i><span>MEM</span><strong id="fabric-memory">—%</strong></div>
+                <div><i></i><span>ROOT</span><strong id="fabric-root">—%</strong></div>
+                <div><i></i><span>MEDIA</span><strong id="fabric-media">—%</strong></div>
+              </div>
+            </article>
+
+            <article class="recent-panel panel">
+              <div class="panel-title"><strong>RECENT OPERATIONS</strong><span id="incident-count">0 ACTIVE</span></div>
+              <div id="recent-primary" class="recent-primary">WAITING FOR OPERATIONS FEED</div>
+              <div id="recent-secondary" class="recent-secondary">LOCAL CONTRACT INITIALIZING</div>
+            </article>
+          </div>
+
+          <div id="incident-support" class="incident-support" hidden>
+            <article class="camera-panel compact panel">
+              <div class="panel-title"><strong>CAMERA ALPHA</strong><span id="camera-state-compact" class="inline-state state-pending">WAIT</span></div>
+              <div class="camera-frame compact-frame">
+                <img id="camera-image-compact" alt="Camera Alpha compact snapshot" />
+                <div id="camera-placeholder-compact" class="camera-placeholder" aria-hidden="true"><span>◉</span></div>
+              </div>
+              <div class="camera-footer">SNAPSHOT WALL</div>
+            </article>
+
+            <article class="fabric-panel compact panel">
+              <div class="panel-title"><strong>SYSTEM FABRIC</strong><span id="fabric-state-compact" class="inline-state state-pending">WAIT</span></div>
+              <div class="compact-fabric-list">
+                <div><i></i><span>OBSERVED</span><strong id="compact-services">— / —</strong></div>
+                <div><i></i><span>CPU</span><strong id="compact-cpu">—%</strong></div>
+                <div><i></i><span>MEM</span><strong id="compact-memory">—%</strong></div>
+                <div><i></i><span>ROOT</span><strong id="compact-root">—%</strong></div>
+                <div><i></i><span>EXTERNAL</span><strong id="compact-external">— / —</strong></div>
+              </div>
+            </article>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="status-dock panel">
+        <div class="dock-cell">
+          <span class="dock-icon" aria-hidden="true">⌁</span>
+          <div><strong id="games-title">GAMES LINK</strong><span id="games-detail">WAITING</span></div>
+        </div>
+        <div class="dock-cell">
+          <span class="dock-icon layers" aria-hidden="true">≋</span>
+          <div><strong id="workloads-title">WORKLOADS LINK</strong><span id="workloads-detail">WAITING</span></div>
+        </div>
+        <div class="dock-cell dock-links">
+          <span class="dock-icon chain" aria-hidden="true">◇</span>
+          <div><strong>DATA LINKS</strong><span id="data-links-detail">NWS · 511NY · NYSEG</span></div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="/local-ops-canary-vendor/leaflet/leaflet.js"></script>
+    <script src="/local-ops-canary.js?v=ah001"></script>
+    <script src="/local-ops-airspace.js?v=as001"></script>
+    <script src="/shared/wall-night-mode.js?v=nm002"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# /etc/systemd/system/rh-tracker-api.service
+[Unit]
+Description=rh-tracker API
+After=network.target
+
+[Service]
+Type=simple
+User=ap3x
+WorkingDirectory=/home/ap3x/scripts/rh_tracker
+ExecStart=/home/ap3x/scripts/rh_tracker/run_tracker_api.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

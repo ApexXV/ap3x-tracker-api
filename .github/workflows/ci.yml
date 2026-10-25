@@ -1,0 +1,24 @@
+name: tracker-api-source
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Compile every Python file
+        run: python -m py_compile rh_tracker/*.py ma001/payload/*.py ma001/tools/*.py
+      - name: Shell syntax
+        run: for f in rh_tracker/*.sh ma001/*.sh deploy/*.sh; do bash -n "$f"; done
+      - name: MA001 tests
+        run: python -m unittest discover -s ma001/tests -v
+      - name: MA001 frontend contract
+        run: node ma001/tests/test_frontend_contract.js
